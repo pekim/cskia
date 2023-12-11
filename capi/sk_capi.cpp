@@ -476,6 +476,11 @@ void sk_canvas_draw_text_blob (sk_canvas_t* canvas, sk_text_blob_t* text, float 
     reinterpret_cast<SkCanvas*>(canvas)->drawTextBlob(reinterpret_cast<SkTextBlob*>(text), x, y, *reinterpret_cast<const SkPaint*>(cpaint));
 }
 
+void sk_canvas_draw_glyphs (sk_canvas_t* canvas, size_t count, const uint16_t glyphs [], const sk_point_t positions [], const sk_point_t origin, const sk_font_t* cfont, const sk_paint_t* cpaint) {
+    reinterpret_cast<SkCanvas*>(canvas)->drawGlyphs(count, reinterpret_cast<const SkGlyphID*>(glyphs), reinterpret_cast<const SkPoint*>(positions), SkPoint::Make(origin.x, origin.y), *reinterpret_cast<const SkFont*>(cfont), *reinterpret_cast<const SkPaint*>(cpaint));
+}
+
+
 bool sk_canvas_get_local_clip_bounds(sk_canvas_t* canvas, sk_rect_t* cbounds) {
     return reinterpret_cast<SkCanvas*>(canvas)->getLocalClipBounds(reinterpret_cast<SkRect*>(cbounds));
 }

@@ -630,6 +630,7 @@ SK_C_API void sk_canvas_draw_rect(sk_canvas_t* canvas, const sk_rect_t* crect, c
 SK_C_API void sk_canvas_draw_round_rect(sk_canvas_t* canvas, const sk_rect_t* crect, float rx, float ry, const sk_paint_t* cpaint);
 SK_C_API void sk_canvas_draw_simple_text(sk_canvas_t* canvas, const void* text, size_t byte_length, sk_text_encoding_t encoding, float x, float y, const sk_font_t* cfont, const sk_paint_t* cpaint);
 SK_C_API void sk_canvas_draw_text_blob (sk_canvas_t* canvas, sk_text_blob_t* text, float x, float y, const sk_paint_t* paint);
+SK_C_API void sk_canvas_draw_glyphs (sk_canvas_t* canvas, size_t count, const uint16_t glyphs [], const sk_point_t positions [], const sk_point_t origin, const sk_font_t* cfont, const sk_paint_t* cpaint);
 SK_C_API bool sk_canvas_get_local_clip_bounds(sk_canvas_t* canvas, sk_rect_t* cbounds);
 SK_C_API int sk_canvas_get_save_count(sk_canvas_t* canvas);
 SK_C_API void sk_canvas_get_total_matrix(sk_canvas_t* canvas, sk_matrix_t* matrix);
