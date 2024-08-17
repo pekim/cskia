@@ -960,6 +960,8 @@ SK_C_API void register_image_codecs();
 // ===== Functions from modules/svg/include/SkSVGDOM.h =====
 SK_C_API sk_svgdom_t* sk_svgdom_new(sk_memory_stream_t *stream);
 SK_C_API sk_svgsvg_t* sk_svgdom_get_root(sk_svgdom_t *dom);
+SK_C_API void sk_svgdom_render(sk_svgdom_t *dom, sk_canvas_t *canvas);
+SK_C_API void sk_svgdom_set_container_size(sk_svgdom_t *dom, float width, float height);
 SK_C_API sk_size_t sk_svgsvg_intrinsic_size(sk_svgsvg_t *svg);
 
 #ifdef __cplusplus

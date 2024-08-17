@@ -1693,6 +1693,16 @@ sk_svgsvg_t* sk_svgdom_get_root(sk_svgdom_t *dom)
     return reinterpret_cast<sk_svgsvg_t*>(reinterpret_cast<SkSVGDOM*>(dom)->getRoot());
 }
 
+void sk_svgdom_render(sk_svgdom_t *dom, sk_canvas_t *canvas)
+{
+    (reinterpret_cast<SkSVGDOM*>(dom)->render(reinterpret_cast<SkCanvas*>(canvas)));
+}
+
+void sk_svgdom_set_container_size(sk_svgdom_t *dom, float width, float height)
+{
+    (reinterpret_cast<SkSVGDOM*>(dom)->setContainerSize(SkSize::Make(width, height)));
+}
+
 sk_size_t sk_svgsvg_intrinsic_size(sk_svgsvg_t *svg)
 {
     SkSize size = reinterpret_cast<SkSVGSVG*>(svg)->intrinsicSize(SkSVGLengthContext(SkSize::Make(0, 0)));
