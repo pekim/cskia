@@ -1679,5 +1679,5 @@ void register_image_codecs() {
 
 sk_svgdom_t* sk_svgdom_new(sk_memory_stream_t *stream)
 {
-    return reinterpret_cast<sk_svgdom_t*>(SkSVGDOM::Builder().make(reinterpret_cast<SkStream&>(stream)).release());
+    return reinterpret_cast<sk_svgdom_t*>(SkSVGDOM::Builder().make(reinterpret_cast<SkStream&>(*stream)).release());
 }
