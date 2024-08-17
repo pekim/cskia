@@ -86,6 +86,7 @@ COMMON_ARGS=" \
   skia_use_lua=false \
   skia_use_metal=false \
   skia_use_piex=false \
+  skia_use_system_expat=false \
   skia_use_system_libjpeg_turbo=false \
   skia_use_system_libpng=false \
   skia_use_system_libwebp=false \
