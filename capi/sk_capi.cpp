@@ -50,6 +50,8 @@
 #include "include/utils/SkParsePath.h"
 #include "src/pdf/SkPDFDocumentPriv.h"
 #include "modules/svg/include/SkSVGDOM.h"
+#include "modules/svg/include/SkSVGSVG.h"
+#include "modules/svg/include/SkSVGRenderContext.h"
 
 #if defined(SK_BUILD_FOR_MAC)
 #include "include/ports/SkFontMgr_mac_ct.h"
@@ -316,6 +318,7 @@ static_assert(sizeof(sk_font_metrics_t) == sizeof(SkFontMetrics), ASSERT_STRUCT_
 static_assert(sizeof(sk_high_contrast_config_t) == sizeof(SkHighContrastConfig), ASSERT_STRUCT_MSG(SkHighContrastConfig, sk_high_contrast_config_t));
 static_assert(sizeof(sk_ipoint_t) == sizeof(SkIPoint), ASSERT_STRUCT_MSG(SkIPoint, sk_ipoint_t));
 static_assert(sizeof(sk_irect_t) == sizeof(SkIRect), ASSERT_STRUCT_MSG(SkIRect, sk_irect_t));
+static_assert(sizeof(sk_size_t) == sizeof(SkSize), ASSERT_STRUCT_MSG(SkSize, sk_size_t));
 static_assert(sizeof(sk_isize_t) == sizeof(SkISize), ASSERT_STRUCT_MSG(SkISize, sk_isize_t));
 static_assert(sizeof(sk_point3_t) == sizeof(SkPoint3), ASSERT_STRUCT_MSG(SkPoint3, sk_point3_t));
 static_assert(sizeof(sk_point_t) == sizeof(SkPoint), ASSERT_STRUCT_MSG(SkPoint, sk_point_t));
@@ -1679,5 +1682,19 @@ void register_image_codecs() {
 
 sk_svgdom_t* sk_svgdom_new(sk_memory_stream_t *stream)
 {
+    // auto size = SkSVGDOM::Builder().make(reinterpret_cast<SkStream&>(*stream)).release()->containerSize();
+    // printf("%f, %f\n",size.fWidth, size.fHeight);
+
     return reinterpret_cast<sk_svgdom_t*>(SkSVGDOM::Builder().make(reinterpret_cast<SkStream&>(*stream)).release());
+}
+
+sk_svgsvg_t* sk_svgdom_get_root(sk_svgdom_t *dom)
+{
+    return reinterpret_cast<sk_svgsvg_t*>(reinterpret_cast<SkSVGDOM*>(dom)->getRoot());
+}
+
+sk_size_t sk_svgsvg_intrinsic_size(sk_svgsvg_t *svg)
+{
+    SkSize size = reinterpret_cast<SkSVGSVG*>(svg)->intrinsicSize(SkSVGLengthContext(SkSize::Make(0, 0)));
+    return *(sk_size_t*)(&size);
 }

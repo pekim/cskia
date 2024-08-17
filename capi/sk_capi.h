@@ -71,6 +71,11 @@ typedef struct {
 // ===== Types from include/core/SkSize.h =====
 
 typedef struct {
+    float w;
+    float h;
+} sk_size_t;
+
+typedef struct {
     int32_t w;
     int32_t h;
 } sk_isize_t;
@@ -593,6 +598,7 @@ typedef struct sk_document_t sk_document_t;
 // ===== Types from modules/svg/include/SkSVGDOM.h =====
 
 typedef struct sk_svgdom_t sk_svgdom_t;
+typedef struct sk_svgsvg_t sk_svgsvg_t;
 
 
 // ======================================================
@@ -953,6 +959,8 @@ SK_C_API void register_image_codecs();
 
 // ===== Functions from modules/svg/include/SkSVGDOM.h =====
 SK_C_API sk_svgdom_t* sk_svgdom_new(sk_memory_stream_t *stream);
+SK_C_API sk_svgsvg_t* sk_svgdom_get_root(sk_svgdom_t *dom);
+SK_C_API sk_size_t sk_svgsvg_intrinsic_size(sk_svgsvg_t *svg);
 
 #ifdef __cplusplus
 }
