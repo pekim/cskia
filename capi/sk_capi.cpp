@@ -49,6 +49,7 @@
 #include "include/pathops/SkPathOps.h"
 #include "include/utils/SkParsePath.h"
 #include "src/pdf/SkPDFDocumentPriv.h"
+#include "modules/svg/include/SkSVGDOM.h"
 
 #if defined(SK_BUILD_FOR_MAC)
 #include "include/ports/SkFontMgr_mac_ct.h"
@@ -1668,4 +1669,13 @@ void register_image_codecs() {
     SkCodecs::Register(SkIcoDecoder::Decoder());
     SkCodecs::Register(SkBmpDecoder::Decoder());
     SkCodecs::Register(SkWbmpDecoder::Decoder());
+}
+
+// ===== Functions from modules/svg/include/SkSVGDOM.h =====
+
+void sk_svgdom_test()
+{
+    // SkSVGDOM dom;
+    auto fDom = SkSVGDOM::Builder();
+    printf("%p\n", fDom);
 }

@@ -100,13 +100,16 @@ case $(uname -s) in
 Darwin*)
 	OS_TYPE=darwin
 	LIB_NAME=libskia.a
+	LIBSVG_NAME=libsvg.a
 	case $(uname -m) in
 	x86_64*)
 		UNISON_LIB_NAME=libskia_darwin_amd64.a
+		UNISON_LIBSVG_NAME=libsvg_darwin_amd64.a
 		export MACOSX_DEPLOYMENT_TARGET=10.15
 		;;
 	arm*)
 		UNISON_LIB_NAME=libskia_darwin_arm64.a
+		UNISON_LIBSVG_NAME=libsvg_darwin_arm64.a
 		export MACOSX_DEPLOYMENT_TARGET=11
 		;;
 	esac
@@ -132,7 +135,9 @@ Darwin*)
 Linux*)
 	OS_TYPE=linux
 	LIB_NAME=libskia.a
+	LIBSVG_NAME=libsvg.a
 	UNISON_LIB_NAME=libskia_linux.a
+	UNISON_LIBSVG_NAME=libsvg_linux.a
 	PLATFORM_ARGS=" \
       skia_enable_fontmgr_win=false \
       skia_use_fonthost_mac=false \
@@ -154,7 +159,9 @@ Linux*)
 MINGW*)
 	OS_TYPE=windows
 	LIB_NAME=skia.dll
+	LIBSVG_NAME=svg.dll
 	UNISON_LIB_NAME=skia_windows.dll
+	UNISON_LIBSVG_NAME=svg_windows.dll
 	PLATFORM_ARGS=" \
       is_component_build=true \
       skia_enable_fontmgr_win=true \
@@ -227,6 +234,7 @@ mkdir -p "${DIST}/include"
 cp include/sk_capi.h "${DIST}/include/"
 mkdir -p "${DIST}/lib/${OS_TYPE}"
 cp "${BUILD_DIR}/${LIB_NAME}" "${DIST}/lib/${OS_TYPE}/"
+cp "${BUILD_DIR}/${LIBSVG_NAME}" "${DIST}/lib/${OS_TYPE}/"
 
 cd ../..
 
@@ -236,5 +244,6 @@ if [ -d ../unison ]; then
 	mkdir -p "${RELATIVE_UNISON_DIR}"
 	cp "${DIST}/include/sk_capi.h" "${RELATIVE_UNISON_DIR}/"
 	cp "${DIST}/lib/${OS_TYPE}/${LIB_NAME}" "${RELATIVE_UNISON_DIR}/${UNISON_LIB_NAME}"
+	cp "${DIST}/lib/${OS_TYPE}/${LIBSVG_NAME}" "${RELATIVE_UNISON_DIR}/${UNISON_LIBSVG_NAME}"
 	echo "Copied distribution to unison"
 fi
