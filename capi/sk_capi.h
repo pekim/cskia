@@ -568,6 +568,7 @@ typedef struct {
 typedef struct sk_wstream_t sk_wstream_t;
 typedef struct sk_file_wstream_t sk_file_wstream_t;
 typedef struct sk_dynamic_memory_wstream_t sk_dynamic_memory_wstream_t;
+typedef struct sk_memory_stream_t sk_memory_stream_t;
 
 // ===== Types from include/docs/SkPDFDocument.h =====
 
@@ -588,6 +589,10 @@ typedef struct {
 // ===== Types from include/core/SkDocument.h =====
 
 typedef struct sk_document_t sk_document_t;
+
+// ===== Types from modules/svg/include/SkSVGDOM.h =====
+
+typedef struct sk_svgdom_t sk_svgdom_t;
 
 
 // ======================================================
@@ -932,6 +937,8 @@ SK_C_API size_t sk_file_wstream_bytes_written(sk_file_wstream_t* stream);
 SK_C_API void sk_file_wstream_flush(sk_file_wstream_t* stream);
 SK_C_API void sk_file_wstream_delete(sk_file_wstream_t* stream);
 
+SK_C_API sk_memory_stream_t* sk_memory_stream_make_copy(const void* data, size_t length);
+
 // ===== Functions from include/core/SKDocument.h =====
 SK_C_API sk_canvas_t* sk_document_begin_page(sk_document_t* doc, float width, float height);
 SK_C_API void sk_document_end_page(sk_document_t* doc);
@@ -945,7 +952,7 @@ SK_C_API sk_document_t* sk_document_make_pdf(sk_wstream_t* stream, sk_metadata_t
 SK_C_API void register_image_codecs();
 
 // ===== Functions from modules/svg/include/SkSVGDOM.h =====
-SK_C_API void sk_svgdom_test();
+SK_C_API sk_svgdom_t* sk_svgdom_new(sk_memory_stream_t *stream);
 
 #ifdef __cplusplus
 }

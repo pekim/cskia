@@ -1602,6 +1602,10 @@ void sk_file_wstream_delete(sk_file_wstream_t* stream) {
 	delete reinterpret_cast<SkFILEWStream*>(stream);
 }
 
+sk_memory_stream_t* sk_memory_stream_make_copy(const void* data, size_t length) {
+	return reinterpret_cast<sk_memory_stream_t*>(SkMemoryStream::MakeCopy(data, length).release());
+}
+
 // ===== Functions from include/core/SkDocument.h =====
 sk_canvas_t* sk_document_begin_page(sk_document_t* doc, float width, float height) {
 	return reinterpret_cast<sk_canvas_t*>(reinterpret_cast<SkDocument*>(doc)->beginPage(width, height));
@@ -1673,9 +1677,7 @@ void register_image_codecs() {
 
 // ===== Functions from modules/svg/include/SkSVGDOM.h =====
 
-void sk_svgdom_test()
+sk_svgdom_t* sk_svgdom_new(sk_memory_stream_t *stream)
 {
-    // SkSVGDOM dom;
-    auto fDom = SkSVGDOM::Builder();
-    printf("%p\n", fDom);
+    return reinterpret_cast<sk_svgdom_t*>(SkSVGDOM::Builder().make(reinterpret_cast<SkStream&>(stream)).release());
 }
