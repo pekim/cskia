@@ -944,6 +944,7 @@ SK_C_API void sk_file_wstream_flush(sk_file_wstream_t* stream);
 SK_C_API void sk_file_wstream_delete(sk_file_wstream_t* stream);
 
 SK_C_API sk_memory_stream_t* sk_memory_stream_make_copy(const void* data, size_t length);
+SK_C_API void sk_memory_stream_delete(sk_memory_stream_t *stream);
 
 // ===== Functions from include/core/SKDocument.h =====
 SK_C_API sk_canvas_t* sk_document_begin_page(sk_document_t* doc, float width, float height);
@@ -959,6 +960,7 @@ SK_C_API void register_image_codecs();
 
 // ===== Functions from modules/svg/include/SkSVGDOM.h =====
 SK_C_API sk_svgdom_t* sk_svgdom_new(sk_memory_stream_t *stream);
+SK_C_API void sk_svgdom_delete(sk_svgdom_t *dom);
 SK_C_API sk_svgsvg_t* sk_svgdom_get_root(sk_svgdom_t *dom);
 SK_C_API void sk_svgdom_render(sk_svgdom_t *dom, sk_canvas_t *canvas);
 SK_C_API void sk_svgdom_set_container_size(sk_svgdom_t *dom, float width, float height);

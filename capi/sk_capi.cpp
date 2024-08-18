@@ -1609,6 +1609,11 @@ sk_memory_stream_t* sk_memory_stream_make_copy(const void* data, size_t length) 
 	return reinterpret_cast<sk_memory_stream_t*>(SkMemoryStream::MakeCopy(data, length).release());
 }
 
+void sk_memory_stream_delete(sk_memory_stream_t *stream) {
+    delete reinterpret_cast<SkMemoryStream*>(stream);
+}
+
+
 // ===== Functions from include/core/SkDocument.h =====
 sk_canvas_t* sk_document_begin_page(sk_document_t* doc, float width, float height) {
 	return reinterpret_cast<sk_canvas_t*>(reinterpret_cast<SkDocument*>(doc)->beginPage(width, height));
@@ -1680,28 +1685,27 @@ void register_image_codecs() {
 
 // ===== Functions from modules/svg/include/SkSVGDOM.h =====
 
-sk_svgdom_t* sk_svgdom_new(sk_memory_stream_t *stream)
-{
+sk_svgdom_t* sk_svgdom_new(sk_memory_stream_t *stream) {
     return reinterpret_cast<sk_svgdom_t*>(SkSVGDOM::Builder().make(reinterpret_cast<SkStream&>(*stream)).release());
 }
 
-sk_svgsvg_t* sk_svgdom_get_root(sk_svgdom_t *dom)
-{
+void sk_svgdom_delete(sk_svgdom_t *dom) {
+    delete reinterpret_cast<SkSVGDOM*>(dom);
+}
+
+sk_svgsvg_t* sk_svgdom_get_root(sk_svgdom_t *dom) {
     return reinterpret_cast<sk_svgsvg_t*>(reinterpret_cast<SkSVGDOM*>(dom)->getRoot());
 }
 
-void sk_svgdom_render(sk_svgdom_t *dom, sk_canvas_t *canvas)
-{
+void sk_svgdom_render(sk_svgdom_t *dom, sk_canvas_t *canvas) {
     (reinterpret_cast<SkSVGDOM*>(dom)->render(reinterpret_cast<SkCanvas*>(canvas)));
 }
 
-void sk_svgdom_set_container_size(sk_svgdom_t *dom, float width, float height)
-{
+void sk_svgdom_set_container_size(sk_svgdom_t *dom, float width, float height) {
     (reinterpret_cast<SkSVGDOM*>(dom)->setContainerSize(SkSize::Make(width, height)));
 }
 
-sk_size_t sk_svgsvg_intrinsic_size(sk_svgsvg_t *svg)
-{
+sk_size_t sk_svgsvg_intrinsic_size(sk_svgsvg_t *svg) {
     SkSize size = reinterpret_cast<SkSVGSVG*>(svg)->intrinsicSize(SkSVGLengthContext(SkSize::Make(0, 0)));
     return *(sk_size_t*)(&size);
 }
