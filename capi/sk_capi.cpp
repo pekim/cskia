@@ -1685,8 +1685,8 @@ void register_image_codecs() {
 
 // ===== Functions from modules/svg/include/SkSVGDOM.h =====
 
-sk_svgdom_t* sk_svgdom_new(sk_memory_stream_t *stream) {
-    return reinterpret_cast<sk_svgdom_t*>(SkSVGDOM::Builder().make(reinterpret_cast<SkStream&>(*stream)).release());
+sk_svgdom_t* sk_svgdom_make_from_stream(sk_memory_stream_t *stream) {
+    return reinterpret_cast<sk_svgdom_t*>(SkSVGDOM::MakeFromStream(reinterpret_cast<SkStream&>(*stream)).release());
 }
 
 void sk_svgdom_delete(sk_svgdom_t *dom) {

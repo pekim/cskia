@@ -959,7 +959,7 @@ SK_C_API sk_document_t* sk_document_make_pdf(sk_wstream_t* stream, sk_metadata_t
 SK_C_API void register_image_codecs();
 
 // ===== Functions from modules/svg/include/SkSVGDOM.h =====
-SK_C_API sk_svgdom_t* sk_svgdom_new(sk_memory_stream_t *stream);
+SK_C_API sk_svgdom_t* sk_svgdom_make_from_stream(sk_memory_stream_t *stream);
 SK_C_API void sk_svgdom_delete(sk_svgdom_t *dom);
 SK_C_API sk_svgsvg_t* sk_svgdom_get_root(sk_svgdom_t *dom);
 SK_C_API void sk_svgdom_render(sk_svgdom_t *dom, sk_canvas_t *canvas);
