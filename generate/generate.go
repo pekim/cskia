@@ -20,13 +20,26 @@ func Generate() {
 	if err != nil {
 		panic(err)
 	}
-	parseArgs := []string{"-I", path.Join(resourcesDir, "include")}
+
+	parseArgs := []string{
+		"-I", path.Join(resourcesDir, "include"),
+		"-I", "./skia/skia/",
+		"-x", "c++-header",
+	}
 
 	var tu clang.TranslationUnit
 	index := clang.NewIndex(0, 1)
-	errCode := index.ParseTranslationUnit2("./generate/test-sources/test.c", parseArgs, nil,
+	errCode := index.ParseTranslationUnit2("./skia/skia/include/core/SkSurface.h", parseArgs, nil,
 		clang.TranslationUnit_SkipFunctionBodies, &tu)
-	fmt.Println(clang.Error_Success, errCode)
+	if errCode != clang.Error_Success {
+		panic(errCode)
+	}
+
+	tu.TranslationUnitCursor().Visit(func(cursor, parent clang.Cursor) (status clang.ChildVisitResult) {
+		fmt.Println(cursor.Spelling())
+		fmt.Println("  ", cursor.Kind().Spelling(), cursor.DisplayName())
+		return clang.ChildVisit_Continue
+	})
 }
 
 func clangResourceDir() (string, error) {
