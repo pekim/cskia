@@ -29,7 +29,7 @@ func Generate() {
 
 	var tu clang.TranslationUnit
 	index := clang.NewIndex(0, 1)
-	errCode := index.ParseTranslationUnit2("./skia/skia/include/core/SkSurface.h", parseArgs, nil,
+	errCode := index.ParseTranslationUnit2("./generate/skia_header_files.h", parseArgs, nil,
 		clang.TranslationUnit_SkipFunctionBodies, &tu)
 	if errCode != clang.Error_Success {
 		panic(errCode)
