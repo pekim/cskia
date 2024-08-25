@@ -24,7 +24,7 @@ func (g *generator) parse() {
 	}
 
 	index := clang.NewIndex(0, 1)
-	errCode := index.ParseTranslationUnit2("./generate/skia_header_files.h", parseArgs, nil,
+	errCode := index.ParseTranslationUnit2("./generate/skia.h", parseArgs, nil,
 		clang.TranslationUnit_SkipFunctionBodies, &g.transUnit)
 	if errCode != clang.Error_Success {
 		panic(errCode)
@@ -33,8 +33,6 @@ func (g *generator) parse() {
 
 func (g *generator) generate() {
 	g.transUnit.TranslationUnitCursor().Visit(func(cursor, parent clang.Cursor) (status clang.ChildVisitResult) {
-		// fmt.Println(cursor.Spelling())
-		// fmt.Println("  ", cursor.Kind().Spelling(), cursor.DisplayName())
 		switch cursor.Kind() {
 		case clang.Cursor_ClassDecl:
 			g.generateClass(cursor)
@@ -49,7 +47,7 @@ func (g *generator) generate() {
 func (g *generator) generateClass(cursor clang.Cursor) {
 	fmt.Println("class", cursor.Spelling())
 	cursor.Visit(func(cursor, parent clang.Cursor) (status clang.ChildVisitResult) {
-		fmt.Println("  ", cursor.Spelling(), cursor.Kind(), cursor.VarDeclInitializer().Spelling())
+		fmt.Println("  ", cursor.Spelling(), cursor.Kind())
 		switch cursor.Kind() {
 		case clang.Cursor_EnumDecl:
 			g.generateClassEnum(cursor)
@@ -62,7 +60,7 @@ func (g *generator) generateClass(cursor clang.Cursor) {
 func (g *generator) generateClassEnum(cursor clang.Cursor) {
 	fmt.Println("  enum", cursor.Spelling())
 	cursor.Visit(func(cursor, parent clang.Cursor) (status clang.ChildVisitResult) {
-		fmt.Println("    ", cursor.Spelling(), cursor.Kind(), cursor.VarDeclInitializer().Spelling(), cursor.EnumConstantDeclValue())
+		fmt.Println("    ", cursor.Spelling(), cursor.Kind(), cursor.EnumConstantDeclValue())
 		return clang.ChildVisit_Continue
 	})
 }
@@ -70,7 +68,7 @@ func (g *generator) generateClassEnum(cursor clang.Cursor) {
 func (g *generator) generateEnum(cursor clang.Cursor) {
 	fmt.Println("enum", cursor.Spelling())
 	cursor.Visit(func(cursor, parent clang.Cursor) (status clang.ChildVisitResult) {
-		fmt.Println("  ", cursor.Spelling(), cursor.Kind(), cursor.VarDeclInitializer().Spelling(), cursor.EnumConstantDeclValue())
+		fmt.Println("  ", cursor.Spelling(), cursor.Kind(), cursor.EnumConstantDeclValue())
 		return clang.ChildVisit_Continue
 	})
 }
